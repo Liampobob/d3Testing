@@ -5,7 +5,7 @@ import NetworkGraph from './NetworkGraph.js'
 class App extends Component {
   render() {
     return (
-      <NetworkGraph />
+      <NetworkGraph centralUser={0}/>
     );
   }
 }
