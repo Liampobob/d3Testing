@@ -143,7 +143,6 @@ export default class NetworkGraph extends React.Component {
               });
           }
       });
-        console.log(this);
-      this.setState({nodes: nodes, links: links, graph: this.createGraph(nodes, links, 200)});
+      this.setState({nodes: nodes, links: links, graph: this.createGraph(nodes, links, 2000)});
       }
 }
