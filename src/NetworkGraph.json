@@ -1,0 +1,40 @@
+{
+  "nodes": [
+    {"id": "first-node", "label": "First node", "color": 0},
+    {"id": "second-node", "label": "Second node", "color": 0},
+    {"id": "third-node", "label": "Third node", "color": 0},
+    {"id": "fourth-node", "label": "Fourth node", "color": 1},
+    {"id": "fith-node", "label": "Fith node", "color": 1},
+    {"id": "sixth-node", "label": "Sixth node", "color": 2},
+    {"id": "seventh-node", "label": "Seventh nodes", "color": 2},
+    {"id": "eighth-node", "label": "Eighth node", "color": 3},
+    {"id": "ninth-node", "label": "Ninth node", "color": 3},
+    {"id": "tenth-node", "label": "Tenth node", "color": 4},
+    {"id": "eleventh-node", "label": "Eleventh node", "color": 4},
+    {"id": "twelth-node", "label": "Twelth node", "color": 5},
+    {"id": "thirteenth-node", "label": "Thirteenth node", "color": 5},
+    {"id": "fourteenth-node", "label": "Fourteenth node", "color": 6},
+    {"id": "fithteenth-node", "label": "Fithteenth node", "color": 7},
+    {"id": "sixteenth-node", "label": "Sixteenth node", "color": 8},
+    {"id": "seventeenth-node", "label": "Seventeenth node", "color": 9}
+  ],
+  "links": [
+    {"source": "first-node", "target": "second-node", "power": 20},
+    {"source": "second-node", "target": "third-node", "power": 7},
+    {"source": "fourth-node", "target": "first-node", "power": 8},
+    {"source": "third-node", "target": "fith-node", "power": 3},
+    {"source": "third-node", "target": "sixth-node", "power": 6},
+    {"source": "seventh-node", "target": "first-node", "power": 4},
+    {"source": "third-node", "target": "eighth-node", "power": 9},
+    {"source": "ninth-node", "target": "second-node", "power": 7},
+    {"source": "tenth-node", "target": "first-node", "power": 5},
+    {"source": "tenth-node", "target": "eleventh-node", "power": 2},
+    {"source": "tenth-node", "target": "twelth-node", "power": 4},
+    {"source": "thirteenth-node", "target": "tenth-node", "power": 8},
+    {"source": "thirteenth-node", "target": "seventeenth-node", "power": 1},
+    {"source": "thirteenth-node", "target": "sixteenth-node", "power": 6},
+    {"source": "fourteenth-node", "target": "thirteenth-node", "power": 6},
+    {"source": "second-node", "target": "fourteenth-node", "power": 2},
+    {"source": "fithteenth-node", "target": "third-node", "power": 3}
+  ]
+}
