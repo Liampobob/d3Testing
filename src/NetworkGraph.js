@@ -1,6 +1,5 @@
 import React from 'react';
-import {InteractiveForceGraph, ForceGraphNode, ForceGraphArrowLink} from 'react-vis-force';
-import {runSimulation} from 'react-vis-force';
+import {InteractiveForceGraph, ForceGraphNode, ForceGraphArrowLink, updateSimulation} from 'react-vis-force';
 import NetworkGraphData from './NetworkGraph.json'
 
 let colors = ["red", "blue", "purple", "black", "green", "yellow", "orange", "cyan", "gray", "pink"];
@@ -36,9 +35,8 @@ export default class NetworkGraph extends React.Component {
           }}
           onMouseEnter={(event, node) => {}}
           onDeselectNode={(event, node) => {}}
-          highlightDependencies
+          highlightDependencies = {true}
           alpha={alpha}
-          alphaMin={0}
       >
           {ourNodes.map( a => this.createNode(a.id, a.label, a.color))}
           {ourLinks.map( a => this.createLink(a.source, a.target, a.power))}
@@ -108,6 +106,7 @@ export default class NetworkGraph extends React.Component {
   }
 
   loadNewNodesAndLinks(clickedNode){
+        console.log(this.state.graph.props.alpha);
       let nodes = this.state.nodes;
       let links = this.state.links;
       let tmpNodes = [];
@@ -143,6 +142,6 @@ export default class NetworkGraph extends React.Component {
               });
           }
       });
-      this.setState({nodes: nodes, links: links, graph: this.createGraph(nodes, links, 2000)});
-      }
+      this.setState({nodes: nodes, links: links, graph: (this.createGraph(nodes, links, 200))});
+    }
 }
