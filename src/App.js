@@ -3,6 +3,7 @@ import './App.css'
 import GraphAgain from './GraphAgain.js'
 import NetworkGraph from './NetworkGraph.js'
 import CanvasChart from "./CanvasChart";
+import NetworkGraphData from './NetworkGraph.json'
 
 let data = [
     {letter: 'A', frequency: .08167},
