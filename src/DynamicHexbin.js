@@ -22,7 +22,7 @@ const color = scaleLinear()
   .range(["rgba(0, 0, 0, 0)", "steelblue"])
   .interpolate(interpolateLab);
 
-const hexbin = d3hexbin().radius(20);
+const dynamicHexbin = d3hexbin().radius(20);
 
 export default class DynamicHexbin extends React.Component {
   constructor(props) {
@@ -53,9 +53,9 @@ export default class DynamicHexbin extends React.Component {
   }
 
   render() {
-    const hexagons = hexbin(this.state.points).map(point => (
+    const hexagons = dynamicHexbin(this.state.points).map(point => (
       <path
-        d={hexbin.hexagon(19.5)}
+        d={dynamicHexbin.hexagon(19.5)}
         transform={`translate(${point.x}, ${point.y})`}
         fill={color(point.length)}
       />

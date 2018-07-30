@@ -1,0 +1,40 @@
+{
+  "nodes": [
+    {"id": "first-node", "group": 0},
+    {"id": "second-node", "group": 0},
+    {"id": "third-node", "group": 0},
+    {"id": "fourth-node", "group": 1},
+    {"id": "fith-node", "group": 1},
+    {"id": "sixth-node", "group": 2},
+    {"id": "seventh-node", "group": 2},
+    {"id": "eighth-node", "group": 3},
+    {"id": "ninth-node", "group": 3},
+    {"id": "tenth-node", "group": 4},
+    {"id": "eleventh-node", "group": 4},
+    {"id": "twelth-node", "group": 5},
+    {"id": "thirteenth-node", "group": 5},
+    {"id": "fourteenth-node", "group": 6},
+    {"id": "fithteenth-node", "group": 7},
+    {"id": "sixteenth-node", "group": 8},
+    {"id": "seventeenth-node", "group": 9}
+  ],
+  "links": [
+    {"source": "first-node", "target": "second-node", "value": 10},
+    {"source": "second-node", "target": "third-node", "value": 7},
+    {"source": "fourth-node", "target": "first-node", "value": 8},
+    {"source": "third-node", "target": "fith-node", "value": 3},
+    {"source": "third-node", "target": "sixth-node", "value": 6},
+    {"source": "seventh-node", "target": "first-node", "value": 4},
+    {"source": "third-node", "target": "eighth-node", "value": 9},
+    {"source": "ninth-node", "target": "second-node", "value": 7},
+    {"source": "tenth-node", "target": "first-node", "value": 14},
+    {"source": "tenth-node", "target": "eleventh-node", "value": 2},
+    {"source": "tenth-node", "target": "twelth-node", "value": 4},
+    {"source": "thirteenth-node", "target": "tenth-node", "value": 12},
+    {"source": "thirteenth-node", "target": "seventeenth-node", "value": 1},
+    {"source": "thirteenth-node", "target": "sixteenth-node", "value": 6},
+    {"source": "fourteenth-node", "target": "thirteenth-node", "value": 12},
+    {"source": "second-node", "target": "fourteenth-node", "value": 14},
+    {"source": "fithteenth-node", "target": "third-node", "value": 3}
+  ]
+}

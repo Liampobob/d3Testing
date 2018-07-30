@@ -63,7 +63,6 @@ export default class NetworkGraph extends React.Component {
       networkGraphNodes.forEach( a => {
           if(a.color === this.props.centralUser){
               nodes.push(a);
-
           }
       } );
       let tmpNodes = [];
