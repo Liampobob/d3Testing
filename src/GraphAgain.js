@@ -12,8 +12,8 @@ export default class GraphAgain extends React.Component {
 
         let simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) { return d.id; }))
-            .force("charge", d3.forceManyBody())
-            .force("center", d3.forceCenter(width / 2, height / 2));
+            .force("charge", d3.forceManyBody().strength())
+            .force("center", d3.forceCenter());
 
         d3.json("NetworkGraph2.json", function(error, graph) {
             if (error) throw error;
@@ -21,9 +21,6 @@ export default class GraphAgain extends React.Component {
             simulation
                 .nodes(graph.nodes)
                 .on("tick", ticked);
-
-            simulation.force("link")
-                .links(graph.links);
 
             d3.select(canvas)
                 .call(d3.drag()
