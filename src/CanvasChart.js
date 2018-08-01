@@ -2,91 +2,115 @@ import React from 'react';
 import * as d3 from 'd3';
 
 let colors = ["red", "blue", "purple", "black", "green", "yellow", "orange", "cyan", "gray", "pink"];
+let radius = 5;
+
 
 export default class CanvasChart extends React.Component {
 
-    componentDidMount() {
-        let data = this.props.data;
-        let canvas = this.canvas;
-        let context = canvas.getContext('2d');
-        let width = canvas.width;
-        let height = canvas.height;
+    canvas;
+    context;
+    simulation;
 
-        let simulation = d3.forceSimulation()
-            .nodes(data.nodes)
-            .force("link", d3.forceLink(data.links).id(function id(d) {
+    constructor() {
+        super();
+
+        this.dragSubject = this.dragSubject.bind(this);
+        this.dragEnded = this.dragEnded.bind(this);
+        this.dragged = this.dragged.bind(this);
+        this.dragStarted = this.dragStarted.bind(this);
+        this.zoomed = this.zoomed.bind(this);
+        this.draw = this.draw.bind(this);
+    }
+
+    componentDidMount() {
+        this.context = this.canvas.getContext('2d');
+
+        this.simulation = d3.forceSimulation()
+            .nodes(this.props.data.nodes)
+            .force("link", d3.forceLink(this.props.data.links).id((d) => {
                 return d.id;
             }))
-            .force("charge", d3.forceManyBody().strength(-75))
-            .force("center", d3.forceCenter(width / 2, height / 2));
+            .force("charge", d3.forceManyBody().strength(-1 * radius * radius))
+            .force("center", d3.forceCenter(this.canvas.width/2, this.canvas.height/2));
 
-        simulation
-            .on("tick", () => {
-                context.clearRect(0, 0, width, height);
+        this.simulation
+            .on("tick", this.draw);
 
-                context.strokeStyle = "#aaa";
-                for (let d of data.links) {
-                    context.beginPath();
-                    context.moveTo(d.source.x, d.source.y);
-                    context.lineTo(d.target.x, d.target.y);
-                    context.stroke();
-                }
-                
-                for (let d of data.nodes) {
-                    context.strokeStyle = colors[d.group];
-                    context.fillStyle = colors[d.group];
-                    context.beginPath();
-                    context.moveTo(d.x + 3, d.y);
-                    context.arc(d.x, d.y, 3, 0, 2 * Math.PI);
-                    context.fill();
-                    context.stroke();
-                }
-
-            });
-
-
-        d3.select(canvas)
+        d3.select(this.canvas)
             .call(d3.drag()
-                .container(canvas)
-                .subject(this.dragSubject(simulation))
-                .on("start", this.dragStarted(simulation))
+                .container(this.canvas)
+                .subject(this.dragSubject)
+                .on("start", this.dragStarted)
                 .on("drag", this.dragged)
-                .on("end", this.dragEnded(simulation)));
+                .on("end", this.dragEnded))
+            .call(d3.zoom()
+                .on("zoom", this.zoomed))
 
     }
 
-    dragStarted(simulation) {
-        return (d, i , nodes) => {
-            if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+    draw() {
+
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.context.strokeStyle = "#aaa";
+        for (let d of this.props.data.links) {
+            this.context.beginPath();
+            this.context.moveTo(d.source.x, d.source.y);
+            this.context.lineTo(d.target.x, d.target.y);
+            this.context.stroke();
+        }
+
+        for (let d of this.props.data.nodes) {
+            this.context.strokeStyle = colors[d.group];
+            this.context.fillStyle = colors[d.group];
+            this.context.beginPath();
+            this.context.arc(d.x, d.y, radius, 0, 2 * Math.PI);
+            this.context.fill();
+            this.context.stroke();
+        }
+
+    }
+
+    zoomed() {
+            this.context.save();
+            this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
+            this.context.translate(d3.event.transform.x, d3.event.transform.y);
+            this.context.scale(d3.event.transform.k, d3.event.transform.k);
+            this.draw();
+            this.context.restore();
+    }
+
+    dragStarted() {
+        // d3.event.sourceEvent.stopPropagation();
+        // d3.select(this.canvas).classed("dragging", true);
+
+        if (!d3.event.active) {
+                this.simulation.alphaTarget(0.3).restart();
+            }
+
             d3.event.subject.fx = d3.event.subject.x;
             d3.event.subject.fy = d3.event.subject.y;
-        };
 
     }
 
     dragged() {
-        d3.event.subject.fx = d3.event.x;
-        d3.event.subject.fy = d3.event.y;
+            d3.event.subject.fx = d3.event.x;
+            d3.event.subject.fy = d3.event.y;
     }
 
-    dragEnded(simulation) {
-        return (d, i , nodes) => {
-            if (!d3.event.active) simulation.alphaTarget(0);
-            d3.event.subject.fx = null;
-            d3.event.subject.fy = null;
-        };
+    dragEnded() {
+        // d3.select(this.canvas).classed("dragging", false);
+
+        if (!d3.event.active) {
+            this.simulation.alphaTarget(0);
+        }
+        d3.event.subject.fx = null;
+        d3.event.subject.fy = null;
     }
 
-    dragSubject(simulation) {
-        return () => {
-            return simulation.find(d3.event.x, d3.event.y);
-        };
-    }
-
-    findById(id) {
-        return (element) => {
-            return element.id === id;
-        };
+    dragSubject() {
+        let node = this.simulation.find(d3.event.x, d3.event.y, radius);
+        return node;
     }
 
     render() {
